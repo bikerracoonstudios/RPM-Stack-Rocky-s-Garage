@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RPM Stack: Rocky's Garage</title>
+  <style>
+    body {
+      margin: 0; background: #0b0c10; color: #fff; font-family: system-ui, sans-serif;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 100vh; text-align: center; padding: 20px;
+    }
+    .badge-btn {
+      background: none; border: none; cursor: pointer; padding: 0; margin-top: 24px;
+      transition: transform 0.15s ease;
+    }
+    .badge-btn:hover { transform: scale(1.05); }
+    .badge-btn img { height: 60px; }
+
+    /* Modal / Pop-up oculto */
+    .modal-backdrop {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(4px); align-items: center; justify-content: center; z-index: 100;
+    }
+    .modal-box {
+      background: #1f2833; border: 1px solid #45f3ff; border-radius: 12px;
+      padding: 30px; max-width: 420px; width: 90%; box-shadow: 0 0 25px rgba(69,243,255,0.2);
+    }
+    .modal-box h2 { margin-top: 0; color: #66fcf1; }
+    .email-input {
+      width: 100%; box-sizing: border-box; padding: 12px; border-radius: 6px;
+      border: 1px solid #45f3ff; background: #0b0c10; color: #fff; font-size: 16px; margin: 16px 0;
+    }
+    .submit-btn {
+      width: 100%; padding: 12px; border: none; border-radius: 6px;
+      background: #45f3ff; color: #0b0c10; font-weight: bold; font-size: 16px; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>RPM STACK: ROCKY'S GARAGE</h1>
+  <p>El arcade definitivo de cambios al corte y persecuciones callejeras.</p>
+
+  <!-- Botón oficial simulado -->
+  <button id="googlePlayBtn" class="badge-btn">
+    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/es_badge_web_generic.png" alt="Disponible en Google Play">
+  </button>
+
+  <!-- Modal emergente -->
+  <div id="leadModal" class="modal-backdrop">
+    <div class="modal-box">
+      <h2>¡Lanzamiento inminente! 🚀</h2>
+      <p>Estamos ultimando los servidores de la beta cerrada. Deja tu correo para avisarte el primer día y desbloquear tu <strong>Moto Mítica HX-R gratis</strong> en tu primera tirada.</p>
+      
+      <form id="leadForm">
+        <input type="email" id="emailField" class="email-input" placeholder="Introduce tu correo electrónico" required>
+        <button type="submit" class="submit-btn">RECLAMAR ACCESO ANTICIPADO</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const playBtn = document.getElementById('googlePlayBtn');
+    const modal = document.getElementById('leadModal');
+    const form = document.getElementById('leadForm');
+
+    // 1. Al pulsar el botón de Google Play: abre el modal y registra la intención real
+    playBtn.addEventListener('click', () => {
+      modal.style.display = 'flex';
+      
+      // Registrar evento si usas Google Analytics o Meta Pixel:
+      if (typeof fbq === 'function') fbq('trackCustom', 'Intent_Download_Click');
+      if (typeof gtag === 'function') gtag('event', 'intent_download_click');
+    });
+
+    // 2. Al enviar el formulario con el email
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('emailField').value;
+      
+      // Puedes enviar este email a Formspree, Google Sheets o tu propia base de datos
+      alert('¡Apuntado con éxito! Revisa tu bandeja de entrada.');
+      modal.style.display = 'none';
+
+      if (typeof fbq === 'function') fbq('track', 'Lead');
+      if (typeof gtag === 'function') gtag('event', 'generate_lead', { email: email });
+    });
+  </script>
+</body>
+</html>
